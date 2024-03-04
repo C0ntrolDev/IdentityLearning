@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\Sessions\Commands\DeleteUserSession\" />
+    <Folder Include="DTOs\Sessions\Commands\Create\" />
+    <Folder Include="DTOs\Sessions\Queries\" />
+    <Folder Include="DTOs\User\Commands\Login\" />
+    <Folder Include="DTOs\User\Commands\Register\" />
+    <Folder Include="DTOs\User\Commands\UpdateUserProfile\" />
+    <Folder Include="DTOs\User\Queries\GetUserProfile\" />
+    <Folder Include="Features\" />
+  </ItemGroup>
+
+</Project>
