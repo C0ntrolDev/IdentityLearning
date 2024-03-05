@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Identity\Sessions\Converters\" />
-    <Folder Include="Features\User\Commands\ConfirmPasswordChanging\" />
   </ItemGroup>
 
   <ItemGroup>

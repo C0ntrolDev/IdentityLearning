@@ -22,10 +22,8 @@ namespace IdentityLearning.Application.Contracts.Identity
 
         public Task UpdateUser(ApplicationUser user);
 
-        public Task<string> GeneratePasswordChangingUpdatingCode(ApplicationUser user);
+        public Task<Result<object>> UpdatePassword(ApplicationUser user, string newPassword);
 
-        public Task<Result<object>> UpdatePassword(ApplicationUser user, string code, string newPassword);
-
-        public Task DeleteUser(ApplicationUser user);
+        public Task DeleteUserAsync(ApplicationUser user);
     }
 }

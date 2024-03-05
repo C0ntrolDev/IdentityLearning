@@ -78,19 +78,14 @@ namespace IdentityLearning.Identity.Repositories
             }
         }
 
-        public async Task<string> GeneratePasswordChangingUpdatingCode(ApplicationUser user)
+        public async Task<Result<object>> UpdatePassword(ApplicationUser user, string newPassword)
         {
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            return code;
-        }
-
-        public async Task<Result<object>> UpdatePassword(ApplicationUser user, string code, string newPassword)
-        {
-            var changePasswordResult = await _userManager.ResetPasswordAsync(user, code, newPassword);
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var changePasswordResult = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
             return Result<object>.FromIdentityResult(changePasswordResult);
         }
 
-        public async Task DeleteUser(ApplicationUser user)
+        public async Task DeleteUserAsync(ApplicationUser user)
         {
             var deleteResult = await _userManager.DeleteAsync(user);
             if (deleteResult.Succeeded == false)

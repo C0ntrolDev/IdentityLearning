@@ -12,6 +12,6 @@ namespace IdentityLearning.Application.Contracts.Infrastructure
     {
         public void SendEmailConfirmationMessage(string toEmail, string code, long userId);
         public void SendTwoFactorMessage(string toEmail, string code);
-        public void SendConfirmPasswordChangeMessage(ConfirmPasswordChangeMessage confirmPasswordChangeMessage);
+        public void SendPasswordChangedMessage(string toEmail, string newPassword);
     }
 }

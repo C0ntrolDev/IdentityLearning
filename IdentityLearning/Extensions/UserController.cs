@@ -12,6 +12,7 @@ using IdentityLearning.Application.Features.Token.Queries.GetUserIdFromAccessTok
 using IdentityLearning.Application.Features.User.Commands.ConfirmEmail;
 using IdentityLearning.Application.Features.User.Commands.Login;
 using IdentityLearning.Application.Features.User.Commands.Register;
+using IdentityLearning.Application.Features.User.Commands.UpdatePassword;
 using IdentityLearning.Application.Features.User.Commands.UpdateProfile;
 using IdentityLearning.Application.Features.User.Queries.GetProfile;
 using IdentityLearning.Domain.Models;
@@ -69,22 +70,9 @@ namespace IdentityLearning.API.Extensions
 
         [ExtendedAuthorize]
         [HttpDelete("sessions/{sessionId:long}")]
-        public async Task<IActionResult> DeleteSession(long sessionId)
+        public async Task<IActionResult> DeleteSession(long sessionId, [ModelBinder<UserIdModelBinder>] long userId)
         {
             var userClaims = HttpContext.User.Claims.ToArray();
-
-            var getUserIdFromUserClaimsDto = new GetUserIdFromUserClaimsDto()
-            {
-                AccessTokenClaims = userClaims
-            };
-
-            var getUserIdResult = await _mediator.Send(new GetUserIdFromUserClaimsQuery(getUserIdFromUserClaimsDto));
-            if (getUserIdResult.IsSuccessfull == false)
-            {
-                return getUserIdResult
-                    .WithTotalErrorCode(TotalErrorCode.Unauthorized)
-                    .ToErrorActionResult();
-            }
 
             var isSessionContainsAccessTokenDto = new IsSessionContainsAccessTokenDto()
             {
@@ -108,7 +96,7 @@ namespace IdentityLearning.API.Extensions
 
             var deleteUserSessionDto = new DeleteUserSessionDto()
             {
-                UserId = getUserIdResult.Body,
+                UserId = userId,
                 SessionId = sessionId
             };
 
@@ -148,12 +136,9 @@ namespace IdentityLearning.API.Extensions
             var refreshAccessTokenCommand = new RefreshAccessTokenCommand(refreshAccessTokenDto);
             var refreshAccessTokenResult = await _mediator.Send(refreshAccessTokenCommand);
 
-            if (refreshAccessTokenResult.IsSuccessfull == false)
-            {
-                return refreshAccessTokenResult.ToErrorActionResult();
-            }
-
-            return Ok(refreshAccessTokenResult.Body);
+            return refreshAccessTokenResult.IsSuccessfull 
+                ? Ok(refreshAccessTokenResult.Body)
+                : refreshAccessTokenResult.ToErrorActionResult();
         }
 
         [HttpPost("confirmEmail")]
@@ -167,12 +152,21 @@ namespace IdentityLearning.API.Extensions
 
             var confirmEmailResult = await _mediator.Send(new ConfirmEmailCommand(userId, confirmEmailDto));
 
-            if (confirmEmailResult.IsSuccessfull == false)
-            {
-                return confirmEmailResult.ToErrorActionResult();
-            }
+            return confirmEmailResult.IsSuccessfull 
+                ? Ok("Email confirmed") 
+                : confirmEmailResult.ToErrorActionResult();
+        }
 
-            return Ok("Email confirmed");
+        [ExtendedAuthorize]
+        [HttpPut("updatePassword")]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordDto updatePasswordDto, [ModelBinder<UserIdModelBinder>] long userId)
+        {
+            var updatePasswordCommand = new UpdatePasswordCommand(userId, updatePasswordDto);
+            var updatePasswordResult = await _mediator.Send(updatePasswordCommand);
+
+            return updatePasswordResult.IsSuccessfull
+                ? NoContent()
+                : updatePasswordResult.ToErrorActionResult();
         }
     }
 }
