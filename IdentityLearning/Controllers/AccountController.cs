@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using IdentityLearning.API.Extensions;
 using IdentityLearning.API.Filters.AccessTokenBlacklistAuthorize;
 using IdentityLearning.API.ModelBinders;
 using IdentityLearning.Application.DTOs.Identity.Sessions.DTOs;
@@ -9,7 +10,9 @@ using IdentityLearning.Application.Features.Sessions.Queries.GetUserSessions;
 using IdentityLearning.Application.Features.Sessions.Queries.IsSessionContainsAccessToken;
 using IdentityLearning.Application.Features.Token.Commands.RefreshAccessToken;
 using IdentityLearning.Application.Features.Token.Queries.GetUserIdFromAccessToken;
+using IdentityLearning.Application.Features.User.Commands.ConfirmDeleteUser;
 using IdentityLearning.Application.Features.User.Commands.ConfirmEmail;
+using IdentityLearning.Application.Features.User.Commands.DeleteUser;
 using IdentityLearning.Application.Features.User.Commands.Login;
 using IdentityLearning.Application.Features.User.Commands.Register;
 using IdentityLearning.Application.Features.User.Commands.UpdatePassword;
@@ -22,15 +25,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityLearning.API.Extensions
+namespace IdentityLearning.API.Controllers
 {
-    [Route("api/user")]
+    [Route("api/account")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public UserController(IMediator mediator)
+        public AccountController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -59,10 +62,10 @@ namespace IdentityLearning.API.Extensions
 
         [ExtendedAuthorize]
         [HttpGet("sessions")]
-        public async Task<IActionResult> GetSessions([ModelBinder<UserIdModelBinder>]long userId)
+        public async Task<IActionResult> GetSessions([ModelBinder<UserIdModelBinder>] long userId)
         {
             var getUserSessionsResult = await _mediator.Send(new GetUserSessionsQuery(userId));
-                
+
             return getUserSessionsResult.IsSuccessfull
                 ? Ok(getUserSessionsResult.Body)
                 : getUserSessionsResult.ToErrorActionResult();
@@ -136,7 +139,7 @@ namespace IdentityLearning.API.Extensions
             var refreshAccessTokenCommand = new RefreshAccessTokenCommand(refreshAccessTokenDto);
             var refreshAccessTokenResult = await _mediator.Send(refreshAccessTokenCommand);
 
-            return refreshAccessTokenResult.IsSuccessfull 
+            return refreshAccessTokenResult.IsSuccessfull
                 ? Ok(refreshAccessTokenResult.Body)
                 : refreshAccessTokenResult.ToErrorActionResult();
         }
@@ -152,8 +155,8 @@ namespace IdentityLearning.API.Extensions
 
             var confirmEmailResult = await _mediator.Send(new ConfirmEmailCommand(userId, confirmEmailDto));
 
-            return confirmEmailResult.IsSuccessfull 
-                ? Ok("Email confirmed") 
+            return confirmEmailResult.IsSuccessfull
+                ? Ok("Email confirmed")
                 : confirmEmailResult.ToErrorActionResult();
         }
 
@@ -167,6 +170,30 @@ namespace IdentityLearning.API.Extensions
             return updatePasswordResult.IsSuccessfull
                 ? NoContent()
                 : updatePasswordResult.ToErrorActionResult();
+        }
+
+        [ExtendedAuthorize]
+        [HttpPut("delete")]
+        public async Task<IActionResult> DeleteAccount([ModelBinder<UserIdModelBinder>] long userId)
+        {
+            var deleteUserCommand = new DeleteUserCommand(userId);
+            var deleteUserResult = await _mediator.Send(deleteUserCommand);
+
+            return deleteUserResult.IsSuccessfull
+                ? NoContent()
+                : deleteUserResult.ToErrorActionResult();
+        }
+
+        [HttpGet("confirmDelete")]
+        [HttpDelete("confirmDelete")]
+        public async Task<IActionResult> ConfirmAccountDelete([FromQuery] long userId, [FromQuery] string code)
+        {
+            var confirmAccountDeleteCommand = new ConfirmDeleteUserCommand(code, userId);
+            var confirmAccountDeleteResult = await _mediator.Send(confirmAccountDeleteCommand);
+
+            return confirmAccountDeleteResult.IsSuccessfull
+                ? NoContent()
+                : confirmAccountDeleteResult.ToErrorActionResult();
         }
     }
 }

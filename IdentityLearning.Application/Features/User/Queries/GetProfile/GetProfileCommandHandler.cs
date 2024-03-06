@@ -13,10 +13,10 @@ namespace IdentityLearning.Application.Features.User.Queries.GetProfile
 {
     internal class GetProfileCommandHandler : IRequestHandler<GetProfileCommand, Result<ProfileDto>>
     {
-        private readonly IApplicationUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public GetProfileCommandHandler(IApplicationUserRepository userRepository, IMapper mapper)
+        public GetProfileCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;

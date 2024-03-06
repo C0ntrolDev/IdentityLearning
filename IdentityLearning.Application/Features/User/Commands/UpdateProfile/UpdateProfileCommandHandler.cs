@@ -9,10 +9,10 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdateProfile
 {
     internal class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, Result<object>>
     {
-        private readonly IApplicationUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UpdateProfileCommandHandler(IApplicationUserRepository userRepository, IMapper mapper)
+        public UpdateProfileCommandHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;

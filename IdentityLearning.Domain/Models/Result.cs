@@ -63,6 +63,17 @@ namespace IdentityLearning.Domain.Models
                 : new Result<T>(errors: this.Errors, totalErrorCode);
         }
 
+        public Result<T> WithReplacedNonSelectedErrorCode(TotalErrorCode totalErrorCode = TotalErrorCode.NotSelected)
+        {
+            if (IsSuccessfull || TotalErrorCode != TotalErrorCode.NotSelected)
+            {
+                return this;
+            }
+
+            return new Result<T>(Errors, totalErrorCode);
+
+        }
+
         public static Result<T> FromIdentityResult(IdentityResult identityResult, TotalErrorCode totalErrorCode = TotalErrorCode.NotSelected)
         {
             return identityResult.Succeeded ?

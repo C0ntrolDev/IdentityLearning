@@ -14,9 +14,9 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdatePassword
 {
     internal class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, Result<object>>
     {
-        private readonly IApplicationUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UpdatePasswordCommandHandler(IApplicationUserRepository userRepository)
+        public UpdatePasswordCommandHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

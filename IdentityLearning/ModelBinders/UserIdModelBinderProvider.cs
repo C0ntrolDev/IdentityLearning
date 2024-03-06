@@ -6,7 +6,7 @@ namespace IdentityLearning.API.ModelBinders
     {
         public IModelBinder? GetBinder(ModelBinderProviderContext context)
         {
-            if (context.Metadata.ModelType == typeof(long))
+            if (context.Metadata.ModelType == typeof(long) && context.Metadata.BinderModelName == "UserIdModelBinder")
             {
                 return new UserIdModelBinder();
             }

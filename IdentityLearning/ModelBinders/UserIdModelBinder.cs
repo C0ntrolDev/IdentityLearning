@@ -12,27 +12,32 @@ namespace IdentityLearning.API.ModelBinders
     {
         public async Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            var mediator = bindingContext.ActionContext.HttpContext.RequestServices.GetRequiredService<IMediator>();
-            bindingContext.Result = ModelBindingResult.Success(null);
-
-            var userClaims = bindingContext.ActionContext.HttpContext.User.Claims;
-            Console.WriteLine(userClaims.Count());
-            var getUserIdFromUserClaimsDto = new GetUserIdFromUserClaimsDto()
+            if (bindingContext.ActionContext.HttpContext.User.Identity is { IsAuthenticated: true })
             {
-                AccessTokenClaims = userClaims
-            };
+                var mediator = bindingContext.ActionContext.HttpContext.RequestServices.GetRequiredService<IMediator>();
+                var userClaims = bindingContext.ActionContext.HttpContext.User.Claims;
 
-            var getUserIdResult = await mediator.Send(new GetUserIdFromUserClaimsQuery(getUserIdFromUserClaimsDto));
-            if (getUserIdResult.IsSuccessfull == false)
-            {
-                foreach (var error in getUserIdResult.Errors)
+                var getUserIdFromUserClaimsDto = new GetUserIdFromUserClaimsDto()
                 {
-                    bindingContext.ModelState.AddModelError("Authorization", error.Description);
-                }
-                return;
-            }
+                    AccessTokenClaims = userClaims
+                };
 
-            bindingContext.Result = ModelBindingResult.Success(getUserIdResult.Body);
+                var getUserIdResult = await mediator.Send(new GetUserIdFromUserClaimsQuery(getUserIdFromUserClaimsDto));
+                if (getUserIdResult.IsSuccessfull == false)
+                {
+                    foreach (var error in getUserIdResult.Errors)
+                    {
+                        bindingContext.ModelState.AddModelError("Authorization", error.Description);
+                    }
+                    return;
+                }
+
+                bindingContext.Result = ModelBindingResult.Success(getUserIdResult.Body);
+            }
+            else
+            {
+                bindingContext.Result = ModelBindingResult.Failed();
+            }
         }
     }
 }

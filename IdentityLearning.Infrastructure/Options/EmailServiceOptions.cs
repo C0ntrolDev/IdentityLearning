@@ -9,6 +9,7 @@ namespace IdentityLearning.Infrastructure.Options
     public class EmailServiceOptions
     {
         public string EmailConfirmationUrl { get; set; } = null!;
+        public string DeleteAccountConfirmationUrl { get; set; } = null!;
 
         public string FromName { get; set; } = null!;
         public string FromEmail { get; set; } = null!;

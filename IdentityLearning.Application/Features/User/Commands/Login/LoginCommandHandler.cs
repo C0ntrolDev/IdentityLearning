@@ -11,11 +11,11 @@ namespace IdentityLearning.Application.Features.User.Commands.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<RefreshAndAccessTokenDto>>
     {
-        private readonly IApplicationUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ISessionRepository _sessionRepository;
         private readonly IMapper _mappper;
 
-        public LoginCommandHandler(IApplicationUserRepository userRepository, ISessionRepository sessionRepository, IMapper mappper)
+        public LoginCommandHandler(IUserRepository userRepository, ISessionRepository sessionRepository, IMapper mappper)
         {
             _userRepository = userRepository;
             _sessionRepository = sessionRepository;

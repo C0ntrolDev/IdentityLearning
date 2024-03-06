@@ -17,9 +17,9 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmEmail
 {
     internal class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, Result<object>>
     {
-        private readonly IApplicationUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ConfirmEmailCommandHandler(IApplicationUserRepository userRepository)
+        public ConfirmEmailCommandHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

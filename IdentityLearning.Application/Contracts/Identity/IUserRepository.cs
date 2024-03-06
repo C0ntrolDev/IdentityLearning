@@ -6,11 +6,11 @@ using IdentityLearning.Domain.Models;
 
 namespace IdentityLearning.Application.Contracts.Identity
 {
-    public interface IApplicationUserRepository
+    public interface IUserRepository
     {
         public Task CreateUser(ApplicationUser user, string password);
-
         public Task<ApplicationUser?> GetUser(long userId);
+        public Task UpdateUser(ApplicationUser user);
 
         public Task<ApplicationUser?> GetUserByCredentials(string email, string password);
 
@@ -20,10 +20,10 @@ namespace IdentityLearning.Application.Contracts.Identity
 
         public Task<Result<object>> ConfirmEmail(ApplicationUser user, string code);
 
-        public Task UpdateUser(ApplicationUser user);
-
         public Task<Result<object>> UpdatePassword(ApplicationUser user, string newPassword);
 
-        public Task DeleteUserAsync(ApplicationUser user);
+        public Task<string> GenerateDeleteUserCode(ApplicationUser user);
+
+        public Task<Result<object>> DeleteUser(ApplicationUser user, string code);
     }
 }

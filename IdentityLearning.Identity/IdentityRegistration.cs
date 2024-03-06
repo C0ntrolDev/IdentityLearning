@@ -36,10 +36,11 @@ namespace IdentityLearning.Identity
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<IdentityDbContext>();
 
+            services.AddSingleton<IDeleteCodeGenerator, DeleteCodeGenerator>();
             services.AddSingleton<ITokenBlacklistCleaner, TokenBlacklistCleaner>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddScoped<ITokenRepository, TokenRepository>();
-            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<ITokenBlacklist, TokenBlacklist>();
 

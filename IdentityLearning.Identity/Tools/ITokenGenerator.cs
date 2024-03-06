@@ -16,7 +16,7 @@ namespace IdentityLearning.Identity.Tools
         public Task<JwtWithInfo> GenerateRefreshToken();
         public Guid? GetGuidFromClaims(IEnumerable<Claim> claims);
         public long? GetUserIdFromClaims(IEnumerable<Claim> claims);
-        IEnumerable<Claim>? GetClaimsFromToken(string token);
+        public IEnumerable<Claim>? GetClaimsFromToken(string token);
         public Task<bool> IsAccessTokenValidToRefresh(string accessToken);
         public Task<bool> IsRefreshTokenValid(string refreshToken);
     }

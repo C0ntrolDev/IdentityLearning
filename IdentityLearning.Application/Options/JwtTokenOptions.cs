@@ -16,6 +16,7 @@ namespace IdentityLearning.Application.Options
 
         public int RefreshTokenExpiresInMinutes { get; set; } = 44640;
         public int AccessTokenExpiresInMinutes { get; set; } = 420;
+        public int DeleteCodeExpiresInMinutes { get; set; } = 10080;
 
         public SymmetricSecurityKey? GetSymmetricSecurityKey()
         {

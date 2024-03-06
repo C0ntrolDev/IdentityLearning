@@ -24,6 +24,7 @@ namespace IdentityLearning.API
             {
                 var baseUrl = builder.WebHost.GetSetting(WebHostDefaults.ServerUrlsKey);
                 o.EmailConfirmationUrl = baseUrl + o.EmailConfirmationUrl;
+                o.DeleteAccountConfirmationUrl = baseUrl + o.DeleteAccountConfirmationUrl;
             });
 
             builder.Services.RegisterIdentity(builder.Configuration);

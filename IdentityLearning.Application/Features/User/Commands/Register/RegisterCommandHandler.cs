@@ -15,11 +15,11 @@ namespace IdentityLearning.Application.Features.User.Commands.Register
 {
     internal class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<string>>
     {
-        private readonly IApplicationUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IEmailSender _emailSender;
         private readonly IMapper _mapper;
 
-        public RegisterCommandHandler(IApplicationUserRepository userRepository, IMapper mapper, IEmailSender emailSender)
+        public RegisterCommandHandler(IUserRepository userRepository, IMapper mapper, IEmailSender emailSender)
         {
             _userRepository = userRepository;
             _mapper = mapper;

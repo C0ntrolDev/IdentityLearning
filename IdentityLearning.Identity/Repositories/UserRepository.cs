@@ -7,19 +7,22 @@ using IdentityLearning.Application.Contracts.Identity;
 using IdentityLearning.Application.Exceptions;
 using IdentityLearning.Domain.Entities.User;
 using IdentityLearning.Domain.Models;
+using IdentityLearning.Identity.Tools;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 
 namespace IdentityLearning.Identity.Repositories
 {
-    public class ApplicationUserRepository : IApplicationUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IDeleteCodeGenerator _deleteCodeGenerator;
 
-        public ApplicationUserRepository(UserManager<ApplicationUser> userManager)
+        public UserRepository(UserManager<ApplicationUser> userManager, IDeleteCodeGenerator deleteCodeGenerator)
         {
             _userManager = userManager;
+            _deleteCodeGenerator = deleteCodeGenerator;
         }
 
         public async Task CreateUser(ApplicationUser user, string password)
@@ -85,14 +88,21 @@ namespace IdentityLearning.Identity.Repositories
             return Result<object>.FromIdentityResult(changePasswordResult);
         }
 
-        public async Task DeleteUserAsync(ApplicationUser user)
+        public Task<string> GenerateDeleteUserCode(ApplicationUser user)
         {
-            var deleteResult = await _userManager.DeleteAsync(user);
-            if (deleteResult.Succeeded == false)
-            {
-                throw new IdentityException(deleteResult);
-            }
+            return Task.FromResult(_deleteCodeGenerator.GenerateDeleteCode(user));
         }
 
+        public async Task<Result<object>> DeleteUser(ApplicationUser user, string code)
+        {
+            var validationResult = await _deleteCodeGenerator.ValidateDeleteCode(user, code);
+            if (validationResult.IsSuccessfull == false)
+            {
+                return validationResult.WithTotalErrorCode(TotalErrorCode.Forbidden);
+            }
+
+            var deleteResult = await _userManager.DeleteAsync(user);
+            return Result<object>.FromIdentityResult(deleteResult);
+        }
     }
 }

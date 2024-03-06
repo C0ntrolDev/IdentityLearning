@@ -11,7 +11,5 @@ namespace IdentityLearning.Application.Contracts.Infrastructure
     public interface IEmailSender
     {
         public void SendEmailConfirmationMessage(string toEmail, string code, long userId);
-        public void SendTwoFactorMessage(string toEmail, string code);
-        public void SendPasswordChangedMessage(string toEmail, string newPassword);
-    }
+        public void SendDeleteAccountConfirmationMessage(string toEmail, string code, long userId); }
 }

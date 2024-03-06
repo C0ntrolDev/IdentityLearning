@@ -17,19 +17,19 @@ namespace IdentityLearning.Application.Features.Sessions.Queries.GetUserSessions
     public class GetUserSessionsQueryHandler : IRequestHandler<GetUserSessionsQuery, Result<IEnumerable<SessionDto>>>
     {
         private readonly ISessionRepository _sessionRepository;
-        private readonly IApplicationUserRepository _applicationUserRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public GetUserSessionsQueryHandler(ISessionRepository sessionRepository, IMapper mapper, IApplicationUserRepository applicationUserRepository)
+        public GetUserSessionsQueryHandler(ISessionRepository sessionRepository, IMapper mapper, IUserRepository userRepository)
         {
             _sessionRepository = sessionRepository;
             _mapper = mapper;
-            _applicationUserRepository = applicationUserRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<Result<IEnumerable<SessionDto>>> Handle(GetUserSessionsQuery request, CancellationToken cancellationToken)
         {
-            var user = await _applicationUserRepository.GetUser(request.UserId);
+            var user = await _userRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<IEnumerable<SessionDto>>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
