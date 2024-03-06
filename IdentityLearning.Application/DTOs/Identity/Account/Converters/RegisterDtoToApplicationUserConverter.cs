@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using IdentityLearning.Application.DTOs.Identity.User.DTOs;
+﻿using AutoMapper;
+using IdentityLearning.Application.DTOs.Identity.Account.DTOs;
 using IdentityLearning.Domain.Entities.User;
 
-namespace IdentityLearning.Application.DTOs.Identity.User.Converters
+namespace IdentityLearning.Application.DTOs.Identity.Account.Converters
 {
     internal class RegisterDtoToApplicationUserConverter : ITypeConverter<RegisterDto, ApplicationUser>
     {

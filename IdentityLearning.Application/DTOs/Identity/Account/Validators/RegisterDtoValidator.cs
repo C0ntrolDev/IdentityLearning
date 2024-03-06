@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using IdentityLearning.Application.Contracts.Identity;
-using IdentityLearning.Application.DTOs.Identity.User.DTOs;
-using IdentityLearning.Application.DTOs.Identity.User.Validators.Common;
+using IdentityLearning.Application.DTOs.Identity.Account.DTOs;
+using IdentityLearning.Application.DTOs.Identity.Account.Validators.Common;
 
-namespace IdentityLearning.Application.DTOs.Identity.User.Validators
+namespace IdentityLearning.Application.DTOs.Identity.Account.Validators
 {
     public class RegisterDtoValidator : AbstractValidator<RegisterDto>
     {

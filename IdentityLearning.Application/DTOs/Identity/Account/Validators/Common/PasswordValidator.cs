@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace IdentityLearning.Application.DTOs.Identity.User.Validators.Common
+namespace IdentityLearning.Application.DTOs.Identity.Account.Validators.Common
 {
     internal class PasswordValidator : AbstractValidator<string>
     {

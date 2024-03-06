@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using IdentityLearning.Application.DTOs.Identity.User.DTOs;
+﻿using FluentValidation;
+using IdentityLearning.Application.DTOs.Identity.Account.DTOs;
 
-namespace IdentityLearning.Application.DTOs.Identity.User.Validators
+namespace IdentityLearning.Application.DTOs.Identity.Account.Validators
 {
     internal class ConfirmEmailDtoValidator : AbstractValidator<ConfirmEmailDto>
     {

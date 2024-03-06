@@ -1,23 +1,24 @@
 ﻿using AutoMapper;
 using IdentityLearning.Application.Contracts.Identity;
+using IdentityLearning.Application.Contracts.Identity.UserRepository.IdentityLearning.Application.Contracts.Identity.UserRepository;
+using IdentityLearning.Application.DTOs.Identity.Account.Validators;
 using IdentityLearning.Application.DTOs.Identity.Common;
-using IdentityLearning.Application.DTOs.Identity.User.Validators;
 using IdentityLearning.Application.Models;
 using IdentityLearning.Application.Models.Extensions;
 using IdentityLearning.Domain.Models;
 using MediatR;
 
-namespace IdentityLearning.Application.Features.User.Commands.Login
+namespace IdentityLearning.Application.Features.Acccount.Commands.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<RefreshAndAccessTokenDto>>
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountUserRepository _accountUserUserRepository;
         private readonly ISessionRepository _sessionRepository;
         private readonly IMapper _mappper;
 
-        public LoginCommandHandler(IAccountRepository accountRepository, ISessionRepository sessionRepository, IMapper mappper)
+        public LoginCommandHandler(IAccountUserRepository accountUserUserRepository, ISessionRepository sessionRepository, IMapper mappper)
         {
-            _accountRepository = accountRepository;
+            _accountUserUserRepository = accountUserUserRepository;
             _sessionRepository = sessionRepository;
             _mappper = mappper;
         }
@@ -31,7 +32,7 @@ namespace IdentityLearning.Application.Features.User.Commands.Login
                 return validateResult.ToResult<RefreshAndAccessTokenDto>();
             }
 
-            var user = await _accountRepository.GetUserByCredentials(request.LoginDto.Email, request.LoginDto.Password);
+            var user = await _accountUserUserRepository.GetUserByCredentials(request.LoginDto.Email, request.LoginDto.Password);
             if (user == null)
             {
                 return Result<RefreshAndAccessTokenDto>.NotSuccessfull($"User with email: {request.LoginDto.Email} and password: {request.LoginDto.Password} not found", TotalErrorCode.NotFound);

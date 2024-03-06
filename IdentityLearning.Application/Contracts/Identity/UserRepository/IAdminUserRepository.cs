@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdentityLearning.Application.Contracts.Identity.UserRepository
 {
-    internal interface IAdminUserRepository : IUserRepository
+    public interface IAdminUserRepository : IUserRepository
     {
     }
 }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using IdentityLearning.Application.DTOs.Identity.User.DTOs;
-using IdentityLearning.Application.DTOs.Identity.User.Validators.Common;
+﻿using FluentValidation;
+using IdentityLearning.Application.DTOs.Identity.Account.DTOs;
+using IdentityLearning.Application.DTOs.Identity.Account.Validators.Common;
 
-namespace IdentityLearning.Application.DTOs.Identity.User.Validators
+namespace IdentityLearning.Application.DTOs.Identity.Account.Validators
 {
     public class UpdatePasswordDtoValidator : AbstractValidator<UpdatePasswordDto>
     {

@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IdentityLearning.Application.Contracts.Identity;
-using IdentityLearning.Application.DTOs.Identity.User.DTOs;
-using IdentityLearning.Application.DTOs.Identity.User.Validators;
+﻿using IdentityLearning.Application.Contracts.Identity.UserRepository.IdentityLearning.Application.Contracts.Identity.UserRepository;
+using IdentityLearning.Application.DTOs.Identity.Account.Validators;
 using IdentityLearning.Application.Models.Extensions;
 using IdentityLearning.Domain.Models;
 using MediatR;
 
-namespace IdentityLearning.Application.Features.User.Commands.UpdatePassword
+namespace IdentityLearning.Application.Features.Acccount.Commands.UpdatePassword
 {
     internal class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, Result<object>>
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountUserRepository _accountUserUserRepository;
 
-        public UpdatePasswordCommandHandler(IAccountRepository accountRepository)
+        public UpdatePasswordCommandHandler(IAccountUserRepository accountUserUserRepository)
         {
-            _accountRepository = accountRepository;
+            _accountUserUserRepository = accountUserUserRepository;
         }
 
         public async Task<Result<object>> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
@@ -30,13 +24,13 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdatePassword
                 return validateResult.ToResult();
             }
 
-            var user = await _accountRepository.GetUser(request.UserId);
+            var user = await _accountUserUserRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<object>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
             }
 
-            return await _accountRepository.UpdatePassword(user, request.UpdatePasswordDto.NewPassword);
+            return await _accountUserUserRepository.UpdatePassword(user, request.UpdatePasswordDto.NewPassword);
         }
     }
 }

@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
-using IdentityLearning.Application.Contracts.Identity;
-using IdentityLearning.Application.DTOs.Identity.User.Validators;
+using IdentityLearning.Application.Contracts.Identity.UserRepository.IdentityLearning.Application.Contracts.Identity.UserRepository;
+using IdentityLearning.Application.DTOs.Identity.Account.Validators;
 using IdentityLearning.Application.Models.Extensions;
 using IdentityLearning.Domain.Models;
 using MediatR;
 
-namespace IdentityLearning.Application.Features.User.Commands.UpdateProfile
+namespace IdentityLearning.Application.Features.Acccount.Commands.UpdateProfile
 {
     internal class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, Result<object>>
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountUserRepository _accountUserUserRepository;
         private readonly IMapper _mapper;
 
-        public UpdateProfileCommandHandler(IAccountRepository accountRepository, IMapper mapper)
+        public UpdateProfileCommandHandler(IAccountUserRepository accountUserUserRepository, IMapper mapper)
         {
-            _accountRepository = accountRepository;
+            _accountUserUserRepository = accountUserUserRepository;
             _mapper = mapper;
         }
 
@@ -27,14 +27,14 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdateProfile
                 return validateResult.ToResult();
             }
 
-            var user = await _accountRepository.GetUser(request.UserId);
+            var user = await _accountUserUserRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<object>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
             }
 
             user = _mapper.Map(request.UpdateProfileDto, user);
-            await _accountRepository.UpdateUser(user);
+            await _accountUserUserRepository.UpdateUser(user);
 
             return Result<object>.Successfull(null!);
         }

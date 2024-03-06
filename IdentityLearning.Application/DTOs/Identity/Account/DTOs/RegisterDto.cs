@@ -1,4 +1,4 @@
-﻿namespace IdentityLearning.Application.DTOs.Identity.User.DTOs
+﻿namespace IdentityLearning.Application.DTOs.Identity.Account.DTOs
 {
     public class RegisterDto
     {

@@ -1,6 +1,9 @@
 ﻿using IdentityLearning.Application.Contracts.Identity;
+using IdentityLearning.Application.Contracts.Identity.UserRepository;
+using IdentityLearning.Application.Contracts.Identity.UserRepository.IdentityLearning.Application.Contracts.Identity.UserRepository;
 using IdentityLearning.Domain.Entities.User;
 using IdentityLearning.Identity.Repositories;
+using IdentityLearning.Identity.Repositories.UserRepository;
 using IdentityLearning.Identity.Services;
 using IdentityLearning.Identity.Tools;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +43,11 @@ namespace IdentityLearning.Identity
             services.AddSingleton<ITokenBlacklistCleaner, TokenBlacklistCleaner>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddScoped<ITokenRepository, TokenRepository>();
-            services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAccountUserRepository, AccountUserRepository>();
+            services.AddScoped<IAdminUserRepository, AdminUserRepository>();
+
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<ITokenBlacklist, TokenBlacklist>();
 

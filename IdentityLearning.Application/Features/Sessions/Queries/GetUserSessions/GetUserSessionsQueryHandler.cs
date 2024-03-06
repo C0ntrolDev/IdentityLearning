@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using IdentityLearning.Application.Contracts.Identity;
+using IdentityLearning.Application.Contracts.Identity.UserRepository;
+using IdentityLearning.Application.Contracts.Identity.UserRepository.IdentityLearning.Application.Contracts.Identity.UserRepository;
 using IdentityLearning.Application.DTOs.Identity.Sessions.DTOs;
 using IdentityLearning.Application.DTOs.Identity.Sessions.Validators;
 using IdentityLearning.Application.Models.Extensions;
@@ -17,19 +19,19 @@ namespace IdentityLearning.Application.Features.Sessions.Queries.GetUserSessions
     public class GetUserSessionsQueryHandler : IRequestHandler<GetUserSessionsQuery, Result<IEnumerable<SessionDto>>>
     {
         private readonly ISessionRepository _sessionRepository;
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountUserRepository _accountUserUserRepository;
         private readonly IMapper _mapper;
 
-        public GetUserSessionsQueryHandler(ISessionRepository sessionRepository, IMapper mapper, IAccountRepository accountRepository)
+        public GetUserSessionsQueryHandler(ISessionRepository sessionRepository, IMapper mapper, IAccountUserRepository accountUserUserRepository)
         {
             _sessionRepository = sessionRepository;
             _mapper = mapper;
-            _accountRepository = accountRepository;
+            _accountUserUserRepository = accountUserUserRepository;
         }
 
         public async Task<Result<IEnumerable<SessionDto>>> Handle(GetUserSessionsQuery request, CancellationToken cancellationToken)
         {
-            var user = await _accountRepository.GetUser(request.UserId);
+            var user = await _accountUserUserRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<IEnumerable<SessionDto>>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);

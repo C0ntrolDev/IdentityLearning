@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
-using IdentityLearning.Application.DTOs.Identity.User.DTOs;
+using IdentityLearning.Application.DTOs.Identity.Account.DTOs;
 
-namespace IdentityLearning.Application.DTOs.Identity.User.Validators
+namespace IdentityLearning.Application.DTOs.Identity.Account.Validators
 {
     public class LoginDtoValidator : AbstractValidator<LoginDto>
     {

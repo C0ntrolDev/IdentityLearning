@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation.Results;
-using IdentityLearning.Application.Contracts.Identity;
-using IdentityLearning.Application.DTOs.Identity.Common;
-using IdentityLearning.Application.DTOs.Identity.User.Validators;
+﻿using IdentityLearning.Application.Contracts.Identity.UserRepository.IdentityLearning.Application.Contracts.Identity.UserRepository;
+using IdentityLearning.Application.DTOs.Identity.Account.Validators;
 using IdentityLearning.Application.Models.Extensions;
 using IdentityLearning.Domain.Models;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
-namespace IdentityLearning.Application.Features.User.Commands.ConfirmEmail
+namespace IdentityLearning.Application.Features.Acccount.Commands.ConfirmEmail
 {
     internal class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, Result<object>>
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAccountUserRepository _accountUserUserRepository;
 
-        public ConfirmEmailCommandHandler(IAccountRepository accountRepository)
+        public ConfirmEmailCommandHandler(IAccountUserRepository accountUserUserRepository)
         {
-            _accountRepository = accountRepository;
+            _accountUserUserRepository = accountUserUserRepository;
         }
 
         public async Task<Result<object>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
@@ -33,7 +24,7 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmEmail
                 return validateResult.ToResult();
             }
 
-            var user = await _accountRepository.GetUser(request.UserId);
+            var user = await _accountUserUserRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<object>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
@@ -44,7 +35,7 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmEmail
                 return Result<object>.NotSuccessfull($"User email already confirmed", TotalErrorCode.Gone);
             }
 
-            var confirmationResult = await _accountRepository.ConfirmEmail(user, request.ConfirmEmailDto.ConfirmationCode);
+            var confirmationResult = await _accountUserUserRepository.ConfirmEmail(user, request.ConfirmEmailDto.ConfirmationCode);
             return confirmationResult.WithTotalErrorCode(TotalErrorCode.Forbidden);
         }
     }

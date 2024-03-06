@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IdentityLearning.Application.DTOs.Identity.User.DTOs
+﻿namespace IdentityLearning.Application.DTOs.Identity.Account.DTOs
 {
     public class UpdatePasswordDto
     {
