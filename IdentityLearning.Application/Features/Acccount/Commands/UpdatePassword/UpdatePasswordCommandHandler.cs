@@ -14,11 +14,11 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdatePassword
 {
     internal class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, Result<object>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public UpdatePasswordCommandHandler(IUserRepository userRepository)
+        public UpdatePasswordCommandHandler(IAccountRepository accountRepository)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<Result<object>> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
@@ -30,13 +30,13 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdatePassword
                 return validateResult.ToResult();
             }
 
-            var user = await _userRepository.GetUser(request.UserId);
+            var user = await _accountRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<object>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
             }
 
-            return await _userRepository.UpdatePassword(user, request.UpdatePasswordDto.NewPassword);
+            return await _accountRepository.UpdatePassword(user, request.UpdatePasswordDto.NewPassword);
         }
     }
 }

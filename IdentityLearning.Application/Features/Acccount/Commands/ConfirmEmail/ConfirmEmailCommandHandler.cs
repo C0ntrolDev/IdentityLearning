@@ -17,11 +17,11 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmEmail
 {
     internal class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, Result<object>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public ConfirmEmailCommandHandler(IUserRepository userRepository)
+        public ConfirmEmailCommandHandler(IAccountRepository accountRepository)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<Result<object>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmEmail
                 return validateResult.ToResult();
             }
 
-            var user = await _userRepository.GetUser(request.UserId);
+            var user = await _accountRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<object>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
@@ -44,7 +44,7 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmEmail
                 return Result<object>.NotSuccessfull($"User email already confirmed", TotalErrorCode.Gone);
             }
 
-            var confirmationResult = await _userRepository.ConfirmEmail(user, request.ConfirmEmailDto.ConfirmationCode);
+            var confirmationResult = await _accountRepository.ConfirmEmail(user, request.ConfirmEmailDto.ConfirmationCode);
             return confirmationResult.WithTotalErrorCode(TotalErrorCode.Forbidden);
         }
     }

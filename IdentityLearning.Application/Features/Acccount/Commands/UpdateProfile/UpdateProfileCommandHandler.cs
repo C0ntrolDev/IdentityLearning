@@ -9,12 +9,12 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdateProfile
 {
     internal class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, Result<object>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IMapper _mapper;
 
-        public UpdateProfileCommandHandler(IUserRepository userRepository, IMapper mapper)
+        public UpdateProfileCommandHandler(IAccountRepository accountRepository, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
             _mapper = mapper;
         }
 
@@ -27,14 +27,14 @@ namespace IdentityLearning.Application.Features.User.Commands.UpdateProfile
                 return validateResult.ToResult();
             }
 
-            var user = await _userRepository.GetUser(request.UserId);
+            var user = await _accountRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<object>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
             }
 
             user = _mapper.Map(request.UpdateProfileDto, user);
-            await _userRepository.UpdateUser(user);
+            await _accountRepository.UpdateUser(user);
 
             return Result<object>.Successfull(null!);
         }

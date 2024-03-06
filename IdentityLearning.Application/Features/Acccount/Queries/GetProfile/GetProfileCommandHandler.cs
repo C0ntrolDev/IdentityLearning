@@ -13,18 +13,18 @@ namespace IdentityLearning.Application.Features.User.Queries.GetProfile
 {
     internal class GetProfileCommandHandler : IRequestHandler<GetProfileCommand, Result<ProfileDto>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IMapper _mapper;
 
-        public GetProfileCommandHandler(IUserRepository userRepository, IMapper mapper)
+        public GetProfileCommandHandler(IAccountRepository accountRepository, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
             _mapper = mapper;
         }
 
         public async Task<Result<ProfileDto>> Handle(GetProfileCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUser(request.UserId);
+            var user = await _accountRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<ProfileDto>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);

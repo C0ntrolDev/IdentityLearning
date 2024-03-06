@@ -40,7 +40,7 @@ namespace IdentityLearning.Identity
             services.AddSingleton<ITokenBlacklistCleaner, TokenBlacklistCleaner>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.AddScoped<ITokenRepository, TokenRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<ITokenBlacklist, TokenBlacklist>();
 

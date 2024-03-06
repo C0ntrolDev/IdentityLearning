@@ -11,13 +11,13 @@ namespace IdentityLearning.Application.Features.User.Commands.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<RefreshAndAccessTokenDto>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly ISessionRepository _sessionRepository;
         private readonly IMapper _mappper;
 
-        public LoginCommandHandler(IUserRepository userRepository, ISessionRepository sessionRepository, IMapper mappper)
+        public LoginCommandHandler(IAccountRepository accountRepository, ISessionRepository sessionRepository, IMapper mappper)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
             _sessionRepository = sessionRepository;
             _mappper = mappper;
         }
@@ -31,7 +31,7 @@ namespace IdentityLearning.Application.Features.User.Commands.Login
                 return validateResult.ToResult<RefreshAndAccessTokenDto>();
             }
 
-            var user = await _userRepository.GetUserByCredentials(request.LoginDto.Email, request.LoginDto.Password);
+            var user = await _accountRepository.GetUserByCredentials(request.LoginDto.Email, request.LoginDto.Password);
             if (user == null)
             {
                 return Result<RefreshAndAccessTokenDto>.NotSuccessfull($"User with email: {request.LoginDto.Email} and password: {request.LoginDto.Password} not found", TotalErrorCode.NotFound);

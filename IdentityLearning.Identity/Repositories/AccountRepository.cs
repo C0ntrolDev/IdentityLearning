@@ -14,12 +14,12 @@ using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 
 namespace IdentityLearning.Identity.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDeleteCodeGenerator _deleteCodeGenerator;
 
-        public UserRepository(UserManager<ApplicationUser> userManager, IDeleteCodeGenerator deleteCodeGenerator)
+        public AccountRepository(UserManager<ApplicationUser> userManager, IDeleteCodeGenerator deleteCodeGenerator)
         {
             _userManager = userManager;
             _deleteCodeGenerator = deleteCodeGenerator;

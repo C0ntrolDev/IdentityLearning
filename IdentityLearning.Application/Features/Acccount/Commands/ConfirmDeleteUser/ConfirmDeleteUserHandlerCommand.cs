@@ -11,20 +11,20 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmDeleteUser
 {
     public class ConfirmDeleteUserHandlerCommand : IRequestHandler<ConfirmDeleteUserCommand, Result<object>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly ISessionRepository _sessionRepository;
         private readonly ITokenBlacklist _tokenBlacklist;
 
-        public ConfirmDeleteUserHandlerCommand(IUserRepository userRepository, ITokenBlacklist tokenBlacklist, ISessionRepository sessionRepository)
+        public ConfirmDeleteUserHandlerCommand(IAccountRepository accountRepository, ITokenBlacklist tokenBlacklist, ISessionRepository sessionRepository)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
             _tokenBlacklist = tokenBlacklist;
             _sessionRepository = sessionRepository;
         }
 
         public async Task<Result<object>> Handle(ConfirmDeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUser(request.UserId);
+            var user = await _accountRepository.GetUser(request.UserId);
             if (user == null)
             {
                 return Result<object>.NotSuccessfull($"User with id: {request.UserId} not found", TotalErrorCode.NotFound);
@@ -43,7 +43,7 @@ namespace IdentityLearning.Application.Features.User.Commands.ConfirmDeleteUser
                     await _sessionRepository.DeleteSession(session);
                 }
             }
-            return await _userRepository.DeleteUser(user, request.Code);
+            return await _accountRepository.DeleteUser(user, request.Code);
         }
     }
 }

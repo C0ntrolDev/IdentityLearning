@@ -6,7 +6,7 @@ using IdentityLearning.Domain.Models;
 
 namespace IdentityLearning.Application.Contracts.Identity
 {
-    public interface IUserRepository
+    public interface IAccountRepository
     {
         public Task CreateUser(ApplicationUser user, string password);
         public Task<ApplicationUser?> GetUser(long userId);

@@ -15,6 +15,8 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Identity\Sessions\Converters\" />
+    <Folder Include="DTOs\Identity\User\" />
+    <Folder Include="Features\User\" />
   </ItemGroup>
 
   <ItemGroup>

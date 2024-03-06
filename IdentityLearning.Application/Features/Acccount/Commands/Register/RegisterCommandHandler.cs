@@ -15,13 +15,13 @@ namespace IdentityLearning.Application.Features.User.Commands.Register
 {
     internal class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<string>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IEmailSender _emailSender;
         private readonly IMapper _mapper;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IMapper mapper, IEmailSender emailSender)
+        public RegisterCommandHandler(IAccountRepository accountRepository, IMapper mapper, IEmailSender emailSender)
         {
-            _userRepository = userRepository;
+            _accountRepository = accountRepository;
             _mapper = mapper;
             _emailSender = emailSender;
         }
@@ -35,16 +35,16 @@ namespace IdentityLearning.Application.Features.User.Commands.Register
                 return validationResult.ToResult<string>();
             }
 
-            var isEmailFree = await _userRepository.IsEmailFree(request.RegisterDto.Email);
+            var isEmailFree = await _accountRepository.IsEmailFree(request.RegisterDto.Email);
             if (isEmailFree == false)
             {
                 return Result<string>.NotSuccessfull("Email not free", TotalErrorCode.Conflict);
             }
 
             var user = _mapper.Map<ApplicationUser>(request.RegisterDto);
-            await _userRepository.CreateUser(user, request.RegisterDto.Password);
+            await _accountRepository.CreateUser(user, request.RegisterDto.Password);
 
-            var confirmationCode = await _userRepository.GenerateEmailConfirmationCode(user);
+            var confirmationCode = await _accountRepository.GenerateEmailConfirmationCode(user);
             
             _emailSender.SendEmailConfirmationMessage(user.Email!, confirmationCode, user.Id);
 
