@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace IdentityLearning.Application.Features.User.Commands.Delete
 {
-    internal record DeleteUserCommand(long UserId) : IRequest<Result<object>>;
+    public record DeleteUserCommand(long UserId) : IRequest<Result<object>>;
 }

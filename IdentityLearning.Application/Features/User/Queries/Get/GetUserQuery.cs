@@ -9,5 +9,5 @@ using MediatR;
 
 namespace IdentityLearning.Application.Features.User.Queries.Get
 {
-    internal record GetUserQuery(long UserId) : IRequest<Result<GetUserResponseDto>>;
+    public record GetUserQuery(long UserId) : IRequest<Result<GetUserResponseDto>>;
 }

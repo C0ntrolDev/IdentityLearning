@@ -9,5 +9,5 @@ using MediatR;
 
 namespace IdentityLearning.Application.Features.User.Commands.Create
 {
-    internal record CreateUserCommand(UserDto User) : IRequest<Result<object>>;
+    public record CreateUserCommand(UserDto User) : IRequest<Result<object>>;
 }
