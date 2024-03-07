@@ -2,7 +2,7 @@
 using IdentityLearning.Application.Contracts.Identity;
 using IdentityLearning.Application.Contracts.Identity.UserRepository.IdentityLearning.Application.Contracts.Identity.UserRepository;
 using IdentityLearning.Application.DTOs.Identity.Account.Validators;
-using IdentityLearning.Application.DTOs.Identity.Common;
+using IdentityLearning.Application.DTOs.Identity.Common.DTOs;
 using IdentityLearning.Application.Models;
 using IdentityLearning.Application.Models.Extensions;
 using IdentityLearning.Domain.Models;

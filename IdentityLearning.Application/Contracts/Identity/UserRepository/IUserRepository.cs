@@ -11,6 +11,7 @@ namespace IdentityLearning.Application.Contracts.Identity.UserRepository
     {
         public Task CreateUser(ApplicationUser user, string password);
         public Task<ApplicationUser?> GetUser(long userId);
+        public Task<IEnumerable<ApplicationUser>> GetAllUsers();
         public Task<ApplicationUser?> GetUserByCredentials(string email, string password);
         public Task UpdateUser(ApplicationUser user);
     }

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace IdentityLearning.Application.DTOs.Identity.Account.Validators.Common
+namespace IdentityLearning.Application.DTOs.Identity.Common.Validators
 {
     internal class NameValidator : AbstractValidator<string>
     {

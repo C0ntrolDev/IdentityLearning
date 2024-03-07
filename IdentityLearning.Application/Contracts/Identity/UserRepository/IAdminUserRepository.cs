@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IdentityLearning.Domain.Entities.User;
+using IdentityLearning.Domain.Models;
 
 namespace IdentityLearning.Application.Contracts.Identity.UserRepository
 {
     public interface IAdminUserRepository : IUserRepository
     {
-        public Task DeleteUser(ApplicationUser user);
+        public Task<Result<object>> DeleteUser(ApplicationUser user);
 
         public Task DeleteAllUsers();
     }

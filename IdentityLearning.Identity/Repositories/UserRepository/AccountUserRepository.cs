@@ -21,7 +21,7 @@ namespace IdentityLearning.Identity.Repositories.UserRepository
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDeleteCodeGenerator _deleteCodeGenerator;
 
-        public AccountUserRepository(UserManager<ApplicationUser> userManager, IDeleteCodeGenerator deleteCodeGenerator) : base(userManager)
+        public AccountUserRepository(UserManager<ApplicationUser> userManager, IDeleteCodeGenerator deleteCodeGenerator, IdentityDbContext dbContext) : base(userManager, dbContext)
         {
             _userManager = userManager;
             _deleteCodeGenerator = deleteCodeGenerator;

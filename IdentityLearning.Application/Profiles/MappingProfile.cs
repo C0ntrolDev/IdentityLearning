@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using IdentityLearning.Application.DTOs.Identity.Account.Converters;
 using IdentityLearning.Application.DTOs.Identity.Account.DTOs;
-using IdentityLearning.Application.DTOs.Identity.Common;
+using IdentityLearning.Application.DTOs.Identity.Common.DTOs;
 using IdentityLearning.Application.DTOs.Identity.Sessions.DTOs;
+using IdentityLearning.Application.DTOs.Identity.User.DTOs;
 using IdentityLearning.Application.Models;
 using IdentityLearning.Domain.Entities.User;
 using IdentityLearning.Domain.Models;
@@ -19,6 +20,9 @@ namespace IdentityLearning.Application.Profiles
             CreateMap<ApplicationUser, ProfileDto>();
             CreateMap<RegisterDto, ApplicationUser>().ConvertUsing<RegisterDtoToApplicationUserConverter>();
             CreateMap<ApplicationUserSession, SessionDto>();
+
+            CreateMap<UserDto, ApplicationUser>();
+            CreateMap<ApplicationUser, GetUserResponseDto>();
         }
     }
 }

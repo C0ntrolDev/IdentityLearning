@@ -1,5 +1,5 @@
 ﻿using IdentityLearning.Application.DTOs.Identity.Account.DTOs;
-using IdentityLearning.Application.DTOs.Identity.Common;
+using IdentityLearning.Application.DTOs.Identity.Common.DTOs;
 using IdentityLearning.Domain.Models;
 using MediatR;
 

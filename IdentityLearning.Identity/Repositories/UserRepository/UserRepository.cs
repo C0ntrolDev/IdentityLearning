@@ -7,16 +7,19 @@ using IdentityLearning.Application.Contracts.Identity.UserRepository;
 using IdentityLearning.Application.Exceptions;
 using IdentityLearning.Domain.Entities.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityLearning.Identity.Repositories.UserRepository
 {
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IdentityDbContext _dbContext;
 
-        public UserRepository(UserManager<ApplicationUser> userManager)
+        public UserRepository(UserManager<ApplicationUser> userManager, IdentityDbContext dbContext)
         {
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public async Task CreateUser(ApplicationUser user, string password)
@@ -37,6 +40,11 @@ namespace IdentityLearning.Identity.Repositories.UserRepository
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
             return user;
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> GetAllUsers()
+        {
+            return await _dbContext.Users.Select(u => u).ToListAsync();
         }
 
         public async Task UpdateUser(ApplicationUser user)

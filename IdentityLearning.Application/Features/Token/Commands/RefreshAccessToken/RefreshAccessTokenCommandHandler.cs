@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using IdentityLearning.Application.Contracts.Identity;
-using IdentityLearning.Application.DTOs.Identity.Common;
+using IdentityLearning.Application.DTOs.Identity.Common.DTOs;
 using IdentityLearning.Application.DTOs.Identity.Token.Validators;
 using IdentityLearning.Application.Models.Extensions;
 using IdentityLearning.Domain.Entities.User;

@@ -1,7 +1,9 @@
-﻿namespace IdentityLearning.Application.DTOs.Identity.Account.DTOs
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace IdentityLearning.Application.DTOs.Identity.Account.DTOs
 {
     public class ConfirmEmailDto
-    { 
+    {
         public string ConfirmationCode { get; set; } = null!;
     }
 }
